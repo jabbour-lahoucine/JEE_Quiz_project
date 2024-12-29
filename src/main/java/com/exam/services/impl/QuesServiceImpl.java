@@ -1,6 +1,7 @@
 package com.exam.services.impl;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,21 +43,20 @@ public class QuesServiceImpl implements QuestionService {
 
 	@Override
 	public void deletequestion(Long quesId) throws Exception {
-		Question question=this.questionRepository.findById(quesId).get();
-		if(question==null) {
+		Optional<Question> question = this.questionRepository.findById(quesId);
+		if (!question.isPresent()) {
 			throw new Exception("Question is not found please enter valid ques id");
 		}
 		this.questionRepository.deleteById(quesId);
-
 	}
 
 	@Override
 	public Question getQuestionById(Long quesId) throws Exception {
-		Question question=this.questionRepository.findById(quesId).get();
-		if(question==null) {
+		Optional<Question> question = this.questionRepository.findById(quesId);
+		if (!question.isPresent()) {
 			throw new Exception("Question is not found please enter valid ques id");
 		}
-		return question;
+		return question.get();
 	}
 
 }

@@ -1,5 +1,6 @@
 package com.exam.model.exam;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class QuizResultResponse {
@@ -54,7 +55,8 @@ public class QuizResultResponse {
 	}
 
 	public QuizResultResponse() {
-		
+		super();
+		this.questions = new ArrayList<>(); // Initialize questions to an empty list
 	}
 	
 	

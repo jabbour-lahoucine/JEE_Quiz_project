@@ -2,6 +2,7 @@ package com.exam.services.impl;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,35 +38,28 @@ public class QuizServiceImpl implements QuizService {
 	}
 
 	@Override
-	public Quiz getQuizById(Long qid) throws Exception {
-		Quiz quiz=this.quizRepository.findById(qid).get();
-		if(quiz==null) {
+	public void deleteQuiz(Long qid) throws Exception {
+		Optional<Quiz> quiz = this.quizRepository.findById(qid);
+		if (!quiz.isPresent()) {
 			throw new Exception("Quiz not found exception");
 		}
-		return quiz;
+		this.quizRepository.deleteById(qid);
 	}
 
 	@Override
-	public void deleteQuiz(Long qid) throws Exception {
-		
-		Quiz quiz=this.quizRepository.findById(qid).get();
-		if(quiz==null) {
+	public Quiz getQuizById(Long qid) throws Exception {
+		Optional<Quiz> quiz = this.quizRepository.findById(qid);
+		if (!quiz.isPresent()) {
 			throw new Exception("Quiz not found exception");
 		}
-		
-		this.quizRepository.deleteById(qid);
-
+		return quiz.get();
 	}
 
 	@Override
 	public List<Quiz> findQuizzesByCategoryId(Category category) {
-		
-		List<Quiz> listOfQuizzesByCategory=this.quizRepository.findQuizzesByCategory(category);
-		
+		List<Quiz> listOfQuizzesByCategory = this.quizRepository.findQuizzesByCategory(category);
 		System.out.println(listOfQuizzesByCategory);
-		
-		return this.quizRepository.findQuizzesByCategory(category);
-		
+		return listOfQuizzesByCategory;
 	}
 
 	@Override
